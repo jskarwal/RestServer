@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR">
+ 	<Properties>
+        <Property name="PATTERN">%d{dd/MM/yyyy HH:mm:ss,SSS} %-5p [%c{1}] - %m%n</Property>
+        
+        <Property name="LOG_FILE_NAME_PREFIX">logs${web:contextPath}</Property>
+        <Property name="FILE_PATTERN">${LOG_FILE_NAME_PREFIX}-%d{MM-dd-yyyy_hh-mm-ss}.log.zip</Property>
+    </Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${PATTERN}" />
+			
+		</Console>
+		<RollingFile name="File" fileName="${LOG_FILE_NAME_PREFIX}.leecare.log" filePattern="${FILE_PATTERN}">
+            <PatternLayout pattern="${PATTERN}"/>
+            <Policies>
+  			  <SizeBasedTriggeringPolicy size="25 MB"/>
+  			</Policies>
+  			<DefaultRolloverStrategy max="5"/>
+  			
+        </RollingFile>
+        <RollingFile name="FinanceFile" fileName="${LOG_FILE_NAME_PREFIX}.finance.log" filePattern="${FILE_PATTERN}">
+            <PatternLayout pattern="${PATTERN}"/>
+            <Policies>
+  			  <SizeBasedTriggeringPolicy size="25 MB"/>
+  			</Policies>
+  			<DefaultRolloverStrategy max="5"/>
+  			
+        </RollingFile>
+        <RollingFile name="IONMYLogFile" fileName="${LOG_FILE_NAME_PREFIX}.ionmy.log" filePattern="${FILE_PATTERN}">
+            <PatternLayout pattern="${PATTERN}"/>
+            <Policies>
+  			  <SizeBasedTriggeringPolicy size="25 MB"/>
+  			</Policies>
+  			<DefaultRolloverStrategy max="5"/>
+  		
+        </RollingFile>
+	</Appenders>
+	<Loggers>
+		<Root level="DEBUG">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="File" />
+		</Root>
+		<Logger level="DEBUG" name="com.ltc.app.server.finance">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="FinanceFile" />
+		</Logger>
+		<Logger level="DEBUG" name="com.ltc.app.server.services.ionmy">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="IONMYLogFile" />
+		</Logger>
+	</Loggers>
+</Configuration>
